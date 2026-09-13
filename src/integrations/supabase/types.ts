@@ -696,6 +696,35 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_adjust_points: {
+        Args: {
+          p_admin: string
+          p_amount: number
+          p_reason: string
+          p_user: string
+        }
+        Returns: Json
+      }
+      award_offer_points: {
+        Args: {
+          p_meta?: Json
+          p_offer: string
+          p_points: number
+          p_provider: string
+          p_tx: string
+          p_type: Database["public"]["Enums"]["ledger_type"]
+          p_user: string
+        }
+        Returns: string
+      }
+      bump_rate_limit: {
+        Args: { p_bucket: string; p_identity: string; p_window_seconds: number }
+        Returns: number
+      }
+      create_withdrawal: {
+        Args: { p_method: string; p_points: number; p_user: string }
+        Returns: Json
+      }
       gen_referral_code: { Args: never; Returns: string }
       has_role: {
         Args: {
