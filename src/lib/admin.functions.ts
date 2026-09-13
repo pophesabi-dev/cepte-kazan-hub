@@ -194,11 +194,13 @@ export const adminUpdateProvider = createServerFn({ method: "POST" })
     if (!(await assertAdmin(context))) throw new Error("Forbidden");
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
-    const patch: Record<string, unknown> = { updated_at: new Date().toISOString() };
-    if (data.isActive !== undefined) patch["is_active"] = data.isActive;
-    if (data.multiplier !== undefined) patch["points_multiplier"] = data.multiplier;
-    if (data.minReward !== undefined) patch["min_reward"] = data.minReward;
-    if (data.sortOrder !== undefined) patch["sort_order"] = data.sortOrder;
+    const patch: Database["public"]["Tables"]["offer_providers"]["Update"] = {
+      updated_at: new Date().toISOString(),
+    };
+    if (data.isActive !== undefined) patch.is_active = data.isActive;
+    if (data.multiplier !== undefined) patch.points_multiplier = data.multiplier;
+    if (data.minReward !== undefined) patch.min_reward = data.minReward;
+    if (data.sortOrder !== undefined) patch.sort_order = data.sortOrder;
 
     await supabaseAdmin.from("offer_providers").update(patch).eq("id", data.providerId);
 
