@@ -697,15 +697,6 @@ export type Database = {
     }
     Functions: {
       gen_referral_code: { Args: never; Returns: string }
-      get_balance: {
-        Args: { _user_id: string }
-        Returns: {
-          pending: number
-          today: number
-          total: number
-          week: number
-        }[]
-      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -714,6 +705,15 @@ export type Database = {
         Returns: boolean
       }
       is_admin: { Args: { _user_id: string }; Returns: boolean }
+      my_balance: {
+        Args: never
+        Returns: {
+          pending: number
+          today: number
+          total: number
+          week: number
+        }[]
+      }
     }
     Enums: {
       app_role: "USER" | "MODERATOR" | "ADMIN" | "SUPER_ADMIN"
