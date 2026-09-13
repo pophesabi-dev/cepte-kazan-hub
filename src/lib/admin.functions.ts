@@ -1,12 +1,14 @@
 import { createServerFn } from "@tanstack/react-start";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import { z } from "zod";
 
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import type { Database } from "@/integrations/supabase/types";
 
-type Ctx = { supabase: { rpc: (fn: "is_admin", args: { _user_id: string }) => Promise<{ data: unknown }> }; userId: string };
+type AdminCtx = { supabase: SupabaseClient<Database>; userId: string };
 
 /** Server-side authorization. Hiding UI is never enough. */
-async function assertAdmin(context: Ctx): Promise<boolean> {
+async function assertAdmin(context: AdminCtx): Promise<boolean> {
   const { data } = await context.supabase.rpc("is_admin", { _user_id: context.userId });
   return data === true;
 }
